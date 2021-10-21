@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>JS + CSS Clock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Qahiri&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -15,11 +18,17 @@
       </div>
     </div>
 
+    <div class="digital-clock">
+      <div class="digital-time">
+        <div class="hour timer"></div>
+        <div class="minute timer"></div>
+        <div class="seconds timer"></div>
+      </div>
+    </div>
+
 
   <style>
     html {
-      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
-      background-size: cover;
       font-family: 'helvetica neue';
       text-align: center;
       font-size: 10px;
@@ -29,10 +38,24 @@
       margin: 0;
       font-size: 2rem;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       flex: 1;
       min-height: 100vh;
       align-items: center;
     }
+
+    body::after {
+      content: "";
+      box-shadow:inset 0 0 0 2000px rgba(32, 32, 32, 0.3);
+      background: black url(https://picsum.photos/1980/1080);
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      position: absolute;
+      z-index: -1;   
+}
 
     .clock {
       width: 30rem;
@@ -59,15 +82,79 @@
     .hand {
       width: 50%;
       height: 6px;
-      background: black;
+      background: rgb(204, 204, 204);
+      box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+    }
+
+    .transition-timing {
+      transition: all 500ms;
+      transition-timing-function: cubic-bezier(0.2, 2.5, 0.50, 1);
+    }
+
+    .clock-face::after {
+      content: '⦿';
+      display: block;
+      position: absolute;
+      left: 45%;
+      top: 45%;
+      font-size: 30px;
+      color: white;
+      text-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+    }
+
+    .digital-time {
+      display: flex;
+      font-family: 'Qahiri', sans-serif;
+      font-size: 100px;
+      color: white;
+      text-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+      transition: all 500ms;
+      transition-timing-function: cubic-bezier(0.2, 2.5, 0.50, 1);
+    }
+
+    .timer {
+      margin-right: 2rem;
     }
 
   </style>
-
+  
   <script>
+    const hourHand = document.querySelector('.hour-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const secondHand = document.querySelector('.second-hand');
 
+    const hour = document.querySelector('.hour');
+    const minute = document.querySelector('.minute');
+    const seconds = document.querySelector('.seconds');
+
+    const clockRotate = () => {
+      const date = new Date();
+      const currentHour = date.getHours();
+      const currentMinute = date.getMinutes();
+      const currentSeconds = date.getSeconds();
+
+      hour.textContent = `${currentHour} :`;
+      minute.textContent = ` ${currentMinute} :`;
+      seconds.textContent = ` ${currentSeconds}`;
+
+      if(currentSeconds === 0) {
+        secondHand.classList.remove('transition-timing');
+      } else {
+        secondHand.classList.add('transition-timing');
+      }
+
+      console.log(currentHour, currentMinute, currentSeconds);
+      hourHand.style.transform = `rotate(${((currentHour / 12)*360) + 90}deg)`;
+      minuteHand.style.transform = `rotate(${((currentMinute / 60)*360) + 90}deg)`;
+      secondHand.style.transform = `rotate(${((currentSeconds / 60)*360) + 90}deg)`;
+    };
+
+    setInterval(clockRotate, 1000);
+
+    clockRotate();
 
   </script>
 </body>
