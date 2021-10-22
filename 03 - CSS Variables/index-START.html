@@ -45,6 +45,18 @@
   </style>
 
   <script>
+    const changeValue = () => {
+      const imgEl = document.querySelector('img');
+      const spacing = document.querySelector('#spacing');;
+      const blurEl = document.querySelector('#blur');
+      const color = document.querySelector('#base');
+      imgEl.style.border = `${spacing.value}px solid ${base.value}`;
+      imgEl.style.filter = `blur(${blurEl.value}px)`;
+    }
+
+    document.querySelector('.controls').addEventListener('change', changeValue);
+    document.querySelector('.controls').addEventListener('mousemove', changeValue);
+    changeValue();
   </script>
 
 </body>
