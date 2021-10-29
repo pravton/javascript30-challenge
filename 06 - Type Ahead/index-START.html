@@ -32,17 +32,17 @@ fetch(endpoint)
     console.log(e.target.value);
     const text = e.target.value;
     
-      const reg = new RegExp(text, `gi`);
-      const filtered = cities.filter(list => list.city.match(reg) || list.state.match(reg));
-      console.log('filtered', filtered);
-      const colorTxt = `<span class="hl">${text}</span>`;
-      const print = filtered.map(el => {
-        return `<li>
-          <span class="name">${el.city.replace(reg, colorTxt)}, ${el.state.replace(reg, colorTxt)}</span>
-          <span class="population">${el.population}</span>
-        </li>`
-      }).join('');
-      results.innerHTML = print;
+    const reg = new RegExp(text, `gi`);
+    const filtered = cities.filter(list => list.city.match(reg) || list.state.match(reg));
+    console.log('filtered', filtered);
+    const colorTxt = `<span class="hl">${text}</span>`;
+    const print = filtered.map(el => {
+      return `<li>
+        <span class="name">${el.city.replace(reg, colorTxt)}, ${el.state.replace(reg, colorTxt)}</span>
+        <span class="population">${el.population}</span>
+      </li>`
+    }).join('');
+    results.innerHTML = print;
   };
 
   searchInput.addEventListener('keyup', findCities);
