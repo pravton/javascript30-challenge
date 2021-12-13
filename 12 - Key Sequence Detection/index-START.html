@@ -7,6 +7,17 @@
 </head>
 <body>
 <script>
+  const keys = [];
+  const secretCode = 'hel';
+
+  document.addEventListener('keydown', function (e){
+    keys.push(e.key);
+    keys.splice(-secretCode.length - 1, keys.length - secretCode.length);
+    const word = keys.join('');
+    if(word === secretCode) {
+      cornify_add();
+    };
+  })
 </script>
 </body>
 </html>
